@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+        <title>Akyral-Toaster Demo</title>
+
+        <script src="../platform/platform.js"></script>
+        <link rel="import" href="akyral-toast.html">
+
+    </head>
+
+    <body unresolved>
+
+        <style media="screen">
+            body {
+                background: #fcc;
+            }
+            div {
+                display: inline-block;
+                height: 50px;
+                width: 180px;
+            }
+
+            #buttons {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate3d(-50%,-50%,0);
+            }
+        </style>
+
+        <akyral-toast><div></div></akyral-toast>
+        <akyral-toast position="top"><div></div></akyral-toast>
+        <akyral-toast position="bottom"><div></div></akyral-toast>
+        <akyral-toast position="left"><div></div></akyral-toast>
+        <akyral-toast position="right"><div></div></akyral-toast>
+        <akyral-toast position=" bottom left "><div></div></akyral-toast>
+        <akyral-toast position="bottom right"><div></div></akyral-toast>
+        <akyral-toast position="top left"><div></div></akyral-toast>
+        <akyral-toast position="top right"><div></div></akyral-toast>
+
+        <span id="buttons">
+            <button name="toggle">toggle</button>
+            <button name="slide">slide</button>
+        </span>
+
+
+        <script charset="utf-8">
+            (function(){
+                var btn = document.querySelector('button[name="toggle"]'),
+                    toasts = document.querySelectorAll('akyral-toast');
+
+                btn.addEventListener('click', function(){
+                    [].forEach.call(toasts, function(toast){
+                        toast.toggle();
+                    });
+                });
+
+                var slide = document.querySelector('button[name="slide"]');
+                slide.addEventListener('click', function(){
+                    [].forEach.call(toasts, function(toast){
+                        toast.setAttribute('type', 'slide');
+                    });
+                });
+
+            }());
+        </script>
+
+    </body>
+
+</html>

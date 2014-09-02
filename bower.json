@@ -1,0 +1,32 @@
+{
+  "name": "akyral-toast",
+  "version": "0.1.0",
+  "authors": [
+    "Filipe Araujo <filipe.alves.araujo@gmail.com>"
+  ],
+  "description": "",
+  "keywords": [
+    "akyral",
+    "toaster",
+    "notifications",
+    "polymer",
+    "responsive",
+    "web-components"
+  ],
+  "main": "akyral-toaster.html",
+  "license": "MIT",
+  "homepage": "https://github.com/filaraujo/akyral-toast/",
+  "ignore": [
+    "**/.*",
+    "**/*.scss",
+    "node_modules",
+    "bower_components",
+    "../",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.3.5",
+    "polymer-test-tools": "Polymer/polymer-test-tools#~0.3.5"
+  }
+}

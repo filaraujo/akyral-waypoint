@@ -1,0 +1,99 @@
+$padding: 10px;
+
+
+
+
+#toast {
+    background: red;
+    position: fixed;
+    opacity: 0;
+    transform: translate3d(0,0,0);
+    transition: opacity .3s cubic-bezier(0, 0, .2, 1), transform .3s cubic-bezier(0, 0, .2, 1);
+    z-index: 100;
+
+// shown
+    &[shown]{
+        opacity: 1;
+        transform: translate3d(0,0,0);
+        transition: opacity .3s cubic-bezier(0, 0, .2, 1), transform .3s cubic-bezier(0, 0, .2, 1);
+    }
+
+// position
+    &[position="bottom"],
+    &[position="top"] {
+        left: 50%;
+        right: auto;
+        transform: translate3d(-50%,0,0);
+    }
+
+    &[position="left"],
+    &[position="right"] {
+        bottom: auto;
+        top: 50%;
+        transform: translate3d(0,-50%,0);
+    }
+
+    &[position~="top"] {
+        bottom: auto;
+        top: $padding;
+    }
+
+    &[position~="left"] {
+        left: $padding;
+        right: auto;
+    }
+
+    &[position~="bottom"] {
+        bottom: $padding;
+        top: auto;
+    }
+
+    &[position~="right"] {
+        left: auto;
+        right: $padding;
+    }
+
+// slide
+    &[type="slide"]{
+        &[position="top"] {
+            transform: translate3d(-50%,-120%,0);
+        }
+
+        &[position="left"] {
+            transform: translate3d(-120%,-50%,0);
+        }
+
+        &[position="bottom"] {
+            transform: translate3d(-50%,120%,0);
+        }
+
+        &[position="right"] {
+            transform: translate3d(120%,-50%,0);
+        }
+
+        &[position~="left"][position~="bottom"],
+        &[position~="left"][position~="top"] {
+            transform: translate3d(-120%,0,0);
+        }
+
+        &[position~="right"][position~="bottom"],
+        &[position~="right"][position~="top"] {
+            transform: translate3d(120%,0,0);
+        }
+
+        &[position="bottom"][shown],
+        &[position="top"][shown] {
+            transform: translate3d(-50%,0,0) !important;
+        }
+
+        &[position~="left"][shown],
+        &[position~="right"][shown] {
+            transform: translate3d(0,0,0) !important;
+        }
+
+        &[position="left"][shown],
+        &[position="right"][shown] {
+            transform: translate3d(0,-50%,0) !important;
+        }
+    }
+}

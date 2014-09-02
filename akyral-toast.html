@@ -1,0 +1,115 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+
+
+
+##Responsive Breakpoints
+`akyral-layout` is currently built using the following breakpoints.
+
+<pre>
+    <code>
+         0        480px         720px        944px        1264px    1920px
+         ├─────────┼─────────────┼─────────────┼───────────┼─────────┼─────────>
+         ·  phone  ·   phablet   ·   tablet    ·  desktop  ·   hd    ·
+    </code>
+</pre>
+
+
+## Using the element
+When defining the main container use the attribute `main` to indicate the element's construct.
+
+Example:
+
+    <akyral-toaster></akyral-toaster>
+
+@element akyral-toast
+@blurb Web component which allows for easy app drawer creation
+@status alpha
+@homepage http://filaraujo.github.io/akyral-toast
+@demo http://filaraujo.github.io/akyral.io/toast.html
+-->
+
+<polymer-element name="akyral-toast">
+    <template>
+        <link rel="stylesheet" href="akyral-toast.css" />
+
+        <div id="toast" type="{{type}}" position="{{position}}" shown?="{{shown}}">
+            <content></content>
+        </div>
+    </template>
+    <script>
+        (function(){
+
+            Polymer('akyral-toast', {
+
+                publish: {
+                    type: { reflect: true, value: 'slide' },
+
+                    /**
+                     * The `shown` attribute manages the visibility state of the
+                     * dialog
+                     *
+                     * @attribute shown
+                     * @type boolean
+                     * @default false
+                     */
+
+                    shown: { reflect: true, value: false },
+
+                    position: { reflect: true, value: 'bottom left' }
+                },
+
+                /**
+                * The `author` attribute defines the initial author, setting
+                * this value will add another author
+                *
+                * @attribute author
+                * @type string
+                * @default 'Filipe Araujo'
+                */
+                set author(name){
+                    if(authors.indexOf(name) > 0){
+                        return;
+                    }
+                    authors.push(name);
+                },
+
+                get author(){
+                    return authors;
+                },
+
+                // normalize: function(val){
+                //     return val.replace(/^\s|\s$/g,'').replace(/\s{2,}/,' ');
+                // },
+
+                /**
+                * The `close` method will close the dialog
+                *
+                * @method close
+                */
+                close: function(){
+                    this.shown = false;
+                },
+
+                /**
+                * The `show` method will open the dialog
+                *
+                * @method show
+                */
+                show: function(){
+                    this.shown = true;
+                },
+
+                /**
+                * The `toggle` method will open and close the dialog
+                *
+                * @method toggle
+                */
+                toggle: function(){
+                    this.shown = !this.shown;
+                }
+            });
+        }());
+    </script>
+</polymer-element>
