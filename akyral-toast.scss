@@ -8,14 +8,18 @@ $padding: 10px;
     position: fixed;
     opacity: 0;
     transform: translate3d(0,0,0);
-    transition: opacity .3s cubic-bezier(0, 0, .2, 1), transform .3s cubic-bezier(0, 0, .2, 1);
+    transition:
+        opacity .3s cubic-bezier(1, .2, 0, 0),
+        transform .3s cubic-bezier(1, .2, 0, 0);
     z-index: 100;
 
 // shown
     &[shown]{
         opacity: 1;
         transform: translate3d(0,0,0);
-        transition: opacity .3s cubic-bezier(0, 0, .2, 1), transform .3s cubic-bezier(0, 0, .2, 1);
+        transition:
+            opacity .3s cubic-bezier(0, 0, .2, 1),
+            transform .3s cubic-bezier(0, 0, .2, 1);
     }
 
 // position
@@ -33,9 +37,9 @@ $padding: 10px;
         transform: translate3d(0,-50%,0);
     }
 
-    &[position~="top"] {
-        bottom: auto;
-        top: $padding;
+    &[position~="bottom"] {
+        bottom: $padding;
+        top: auto;
     }
 
     &[position~="left"] {
@@ -43,57 +47,89 @@ $padding: 10px;
         right: auto;
     }
 
-    &[position~="bottom"] {
-        bottom: $padding;
-        top: auto;
-    }
-
     &[position~="right"] {
         left: auto;
         right: $padding;
     }
 
+    &[position~="top"] {
+        bottom: auto;
+        top: $padding;
+    }
+
 // slide
     &[type="slide"]{
-        &[position="top"] {
-            transform: translate3d(-50%,-120%,0);
+
+        &[position="bottom"] {
+            transform: translate3d(-50%,120%,0);
         }
 
         &[position="left"] {
             transform: translate3d(-120%,-50%,0);
         }
 
-        &[position="bottom"] {
-            transform: translate3d(-50%,120%,0);
-        }
-
         &[position="right"] {
             transform: translate3d(120%,-50%,0);
         }
 
-        &[position~="left"][position~="bottom"],
-        &[position~="left"][position~="top"] {
+        &[position="top"] {
+            transform: translate3d(-50%,-120%,0);
+        }
+
+        &[position~="bottom"][position~="left"],
+        &[position~="top"][position~="left"] {
             transform: translate3d(-120%,0,0);
         }
 
-        &[position~="right"][position~="bottom"],
-        &[position~="right"][position~="top"] {
+        &[position~="bottom"][position~="right"],
+        &[position~="top"][position~="right"] {
             transform: translate3d(120%,0,0);
         }
+    }
+// scale
+    &[type="scale"]{
+        transform: translate3d(0,0,0) scale3d(0.2,.4,1);
 
-        &[position="bottom"][shown],
-        &[position="top"][shown] {
-            transform: translate3d(-50%,0,0) !important;
+        &[position="bottom"],
+        &[position="top"] {
+            transform: translate3d(-50%,0,0) scale3d(0.2,.4,1);
         }
 
-        &[position~="left"][shown],
-        &[position~="right"][shown] {
-            transform: translate3d(0,0,0) !important;
+        &[position="left"],
+        &[position="right"] {
+            transform: translate3d(0,-50%,0) scale3d(0.2,.4,1);
+        }
+    }
+
+// flip
+    &[type="flip"]{
+
+        &[position~="bottom"] {
+            bottom: 0;
+            transform-origin: 50% 100%;
+            transform: perspective(1000px) rotateX(-90deg) translate3d(0,0,0);
         }
 
-        &[position="left"][shown],
-        &[position="right"][shown] {
-            transform: translate3d(0,-50%,0) !important;
+        &[position~="bottom"] {
+            bottom: 0;
+            transform-origin: 50% 100%;
+            transform: perspective(1000px) rotateX(-90deg) translate3d(0,0,0);
         }
+    }
+
+// shown
+    &[position="bottom"][shown],
+    &[position="top"][shown] {
+        transform: translate3d(-50%,0,0) !important;
+    }
+
+    &[position~="left"][shown],
+    &[position~="right"][shown] {
+        transform: translate3d(0,0,0) !important;
+    }
+
+    &[position="left"][shown],
+    &[position="right"][shown] {
+        transform: translate3d(0,-50%,0) !important;
     }
 }

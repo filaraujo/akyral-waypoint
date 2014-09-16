@@ -18,7 +18,7 @@
             }
             div {
                 display: inline-block;
-                height: 50px;
+                height: 180px;
                 width: 180px;
             }
 
@@ -42,7 +42,9 @@
 
         <span id="buttons">
             <button name="toggle">toggle</button>
-            <button name="slide">slide</button>
+            <button data-fx="slide">slide</button>
+            <button data-fx="scale">scale</button>
+            <button data-fx="flip">flip</button>
         </span>
 
 
@@ -57,10 +59,12 @@
                     });
                 });
 
-                var slide = document.querySelector('button[name="slide"]');
-                slide.addEventListener('click', function(){
-                    [].forEach.call(toasts, function(toast){
-                        toast.setAttribute('type', 'slide');
+                var fxs = document.querySelectorAll('button[data-fx]');
+                [].forEach.call( fxs, function( fx ){
+                    fx.addEventListener('click', function(){
+                        [].forEach.call(toasts, function(toast){
+                            toast.setAttribute('type', fx.getAttribute('data-fx'));
+                        });
                     });
                 });
 
