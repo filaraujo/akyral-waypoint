@@ -26,7 +26,6 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#~0.3.5",
-    "polymer-test-tools": "Polymer/polymer-test-tools#~0.3.5"
+    "polymer": "Polymer/polymer#~0.4.1"
   }
 }

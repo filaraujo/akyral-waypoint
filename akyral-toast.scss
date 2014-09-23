@@ -1,4 +1,5 @@
-$padding: 10px;
+$margin: 10px;
+$transitionSpeed: .33s;
 
 :host {
     display: flex;
@@ -8,7 +9,6 @@ $padding: 10px;
     position: fixed;
     height: 0;
     z-index: 100;
-    border: 1px solid #000;
 }
 
 :host([position~="top"]){
@@ -40,46 +40,75 @@ $padding: 10px;
     top: 50%;
 }
 
+
+#toast__inner {
+    transition:
+        transform $transitionSpeed cubic-bezier(1, .2, 0, 0);
+}
+
 #toast {
-    background: red;
+    height: 0;
     opacity: 0;
     transform: translate3d(0,0,0);
     transition:
-        opacity .3s cubic-bezier(1, .2, 0, 0),
-        transform .3s cubic-bezier(1, .2, 0, 0);
-    z-index: 100;
+        opacity $transitionSpeed cubic-bezier(0, 0, .2, 1),
+        transform $transitionSpeed cubic-bezier(0, 0, .2, 1);
 
 // shown
-    &[shown]{
+    &[shown] {
         opacity: 1;
-        transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0) !important;
         transition:
-            opacity .3s cubic-bezier(0, 0, .2, 1),
-            transform .3s cubic-bezier(0, 0, .2, 1);
+            opacity $transitionSpeed cubic-bezier(1, .2, 0, 0),
+            transform $transitionSpeed cubic-bezier(1, .2, 0, 0);
+
+
+        &[position="left"] #toast__inner,
+        &[position="right"] #toast__inner {
+            transform: translate3d(0,-50%,0) !important;
+        }
+
+        &[position~="bottom"] #toast__inner {
+            transform: translate3d(0,-100%,0) !important;
+        }
+
+        &[position~="top"] #toast__inner {
+            transform: translate3d(0,0,0) !important;
+        }
     }
+
 
 // position
     &[position~="bottom"] {
-        margin-bottom: $padding;
+        margin-bottom: $margin;
     }
 
     &[position~="left"] {
-        margin-left: $padding;
+        margin-left: $margin;
     }
 
     &[position~="right"] {
-        margin-right: $padding;
+        margin-right: $margin;
     }
 
     &[position~="top"] {
-        margin-top: $padding;
+        margin-top: $margin;
+    }
+
+    &[position="left"] #toast__inner,
+    &[position="right"] #toast__inner {
+        transform: translate3d(0, -50%, 0);
+    }
+
+    &[position~="bottom"] #toast__inner {
+        transform: translate3d(0, -100%, 0);
     }
 
 // slide
     &[type="slide"]{
 
-        &[position="bottom"]{
-            transform: translate3d(0,120%,0);
+        &[position="bottom"] #toast__inner {
+            transform: translate3d(0,20%,0);
         }
 
         &[position~="left"] {
@@ -90,76 +119,72 @@ $padding: 10px;
             transform: translate3d(120%,0,0);
         }
 
-        &[position="top"]{
+        &[position="top"] #toast__inner {
             transform: translate3d(0,-120%,0);
         }
     }
+
 // scale
     &[type="scale"]{
-        // transform: translate3d(0,0,0) scale3d(0.2,.6,1);
 
         &[position~="bottom"]{
             transform: translate3d(0,40px,0) scale3d(0.2,.6,1);
         }
 
-        &[position~="top"]{
-            transform: translate3d(0,-40px,0) scale3d(0.2,.6,1);
-        }
-
         &[position="left"]{
-            transform-origin: 0 0;
+            transform-origin: 0 50%;
             transform: translate3d(-10%,0, 0) scale3d(0.2,.6,1);
         }
 
         &[position="right"]{
+            transform-origin: 100% 50%;
             transform: translate3d(40px,0, 0) scale3d(0.2,.6,1);
         }
 
-        // &[position~="bottom"][position~="left"]{
-        //     transform-origin: 0 100%;
-        // }
-        //
-        // &[position~="bottom"][position~="right"]{
-        //     transform-origin: 100% 100%;
-        // }
-        //
-        // &[position~="top"][position~="left"]{
-        //     transform-origin: 0 0;
-        // }
-        //
-        // &[position~="top"][position~="right"]{
-        //     transform-origin: 100% 0;
-        // }
+        &[position~="top"]{
+            transform: translate3d(0,-40px,0) scale3d(0.2,.6,1);
+        }
     }
 
 // flip
-    // &[type="flip"]{
-    //
-    //     &[position~="bottom"] {
-    //         bottom: 0;
-    //         transform-origin: 50% 100%;
-    //         transform: perspective(1000px) rotateX(-90deg) translate3d(0,0,0);
-    //     }
-    //
-    //     &[position~="bottom"] {
-    //         bottom: 0;
-    //         transform-origin: 50% 100%;
-    //         transform: perspective(1000px) rotateX(-90deg) translate3d(0,0,0);
-    //     }
-    // }
+    &[type="flip"]{
+        perspective: 800px;
 
-// shown
-    &[shown] {
-        transform: translate3d(0,0,0) !important;
+        &[position~="bottom"] {
+            margin-bottom: 0;
+
+            #toast__inner {
+                margin-bottom: 0;
+                transform-origin: 50% 100%;
+                transform: rotateX(-90deg) translate3d(0,0,0);
+            }
+        }
+
+        &[position="left"] {
+            margin-left: 0;
+
+            #toast__inner {
+                transform-origin: 0 50%;
+                transform: rotateY(-90deg) translate3d(0, -50%,0);
+            }
+        }
+
+        &[position="right"] {
+            margin-right: 0;
+
+            #toast__inner {
+                transform-origin: 100% 50%;
+                transform: rotateY(90deg) translate3d(0, -50%,0);
+            }
+        }
+
+        &[position~="top"] {
+            margin-top: 0;
+
+            #toast__inner {
+                transform-origin: 50% 0;
+                transform: rotateX(90deg) translate3d(0,0,0);
+            }
+        }
     }
-
-    // &[position~="left"][shown],
-    // &[position~="right"][shown] {
-    //     transform: translate3d(0,0,0) !important;
-    // }
-    //
-    // &[position="left"][shown],
-    // &[position="right"][shown] {
-    //     transform: translate3d(0,-50%,0) !important;
-    // }
 }
