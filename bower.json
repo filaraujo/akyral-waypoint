@@ -4,7 +4,7 @@
   "authors": [
     "Filipe Araujo <filipe.alves.araujo@gmail.com>"
   ],
-  "description": "",
+  "description": "Web component which allows for easy notification creation",
   "keywords": [
     "akyral",
     "toaster",
