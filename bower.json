@@ -1,21 +1,23 @@
 {
-  "name": "akyral-toast",
-  "version": "0.1.0",
+  "name": "akyral-waypoint",
+  "version": "0.0.1",
   "authors": [
     "Filipe Araujo <filipe.alves.araujo@gmail.com>"
   ],
-  "description": "Web component which allows for easy notification creation",
+  "description": "Web component which allows for scroll driven behaviors",
   "keywords": [
     "akyral",
-    "toaster",
-    "notifications",
+    "scrolling",
+    "scroll",
+    "waypoint",
+    "waypoints",
     "polymer",
     "responsive",
     "web-components"
   ],
-  "main": "akyral-toaster.html",
+  "main": "akyral-waypoint.html",
   "license": "MIT",
-  "homepage": "https://github.com/filaraujo/akyral-toast/",
+  "homepage": "https://github.com/filaraujo/akyral-waypoint/",
   "ignore": [
     "**/.*",
     "**/*.scss",

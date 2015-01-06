@@ -1,0 +1,144 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+Web component which allows for easy notification creation
+
+@element akyral-waypoint
+@blurb Web component which allows for easy notification creation
+@status alpha
+@homepage http://filaraujo.github.io/akyral-waypoint
+@demo http://filaraujo.github.io/akyral.io/waypoint.html
+-->
+
+<polymer-element name="akyral-waypoint">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+  </template>
+  <script>
+    (function() {
+      var authors = ['Filipe Araujo'];
+
+      var instances = [];
+
+      function checkWaypoint(instance) {
+        var trigger;
+
+        if (instance.disabled) {
+          return;
+        }
+
+        //trigger = parseInt(window.getComputedStyle(instance).top, 10);
+        //trigger = isNaN(trigger) ? 0 : trigger;
+        trigger = 0;
+
+        if (instance.getBoundingClientRect().top >= trigger) {
+          instance.state = 'above';
+        }
+
+        if (trigger > instance.getBoundingClientRect().bottom) {
+          instance.state = 'below';
+        }
+      }
+
+      function checkWaypoints() {
+        instances.forEach(checkWaypoint);
+      }
+
+      // register scroll handler
+      window.addEventListener('scroll', function() {
+        // on every frame, checkPosition against each instance
+        window.requestAnimationFrame(checkWaypoints);
+      });
+
+      Polymer('akyral-waypoint', {
+
+        publish: {
+          /**
+           * The `data` attribute defines the data that will be passed
+           * when the `akyral-waypoint` events are fired
+           *
+           * @attribute data
+           * @type object
+           * @default {}
+           */
+          data: {},
+
+          /**
+          * The `disabled` attribute will disable the waypoint
+          *
+          * @attribute data
+          * @type object
+          * @default {}
+          */
+          disabled: {
+            reflect: true,
+            value: false
+          }
+        },
+
+        /**
+         * The `author` attribute defines the initial author, setting
+         * this value will add another author
+         *
+         * @attribute author
+         * @type string
+         * @default 'Filipe Araujo'
+         */
+        set author(name) {
+          if (authors.indexOf(name) > 0) {
+            return;
+          }
+          authors = [].concat.apply(authors, [name]);
+        },
+
+        get author() {
+          return authors;
+        },
+
+        /**
+         * The `stateChanged` method will execute whenever a waypoint
+         * has been crossed. It will fire the `akyral-waypoint-crossed` event
+         * as well as the `akyral-waypoint-below|above` event depending on what
+         * threshold it enters
+         *
+         * @method stateChanged
+         */
+        stateChanged: function(o, n) {
+
+          if(!o){
+            return;
+          }
+
+          this.fire('akyral-waypoint-crossed', this.data);
+          this.fire('akyral-waypoint-' + this.state, this.data);
+        },
+
+        /**
+         * The `<polymer-element>` has been fully removed. The method will
+         * remove the waypoint instance from the instances array
+         *
+         * @method detached
+         */
+        detached: function() {
+          instances.splice(instances.indexOf(this), 1);
+        },
+
+        /**
+         * The `<polymer-element>` has been added to the dom. This method will
+         * add the waypoint instance to the instances array
+         *
+         * @method attached
+         */
+        attached: function() {
+          if (instances.indexOf(this) === -1) {
+            instances.push(this);
+          }
+        },
+      });
+    }());
+  </script>
+</polymer-element>

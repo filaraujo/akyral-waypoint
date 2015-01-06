@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>akyral-waypoint</title>
+
+    <script src="../../webcomponentsjs/webcomponents.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../sinon/index.js"></script>
+
+    <link rel="import" href="../akyral-waypoint.html">
+
+    <style>
+      body {
+        height: 10000px;
+      }
+      akyral-waypoint {
+        border: 1px solid #ccf;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 380px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <akyral-waypoint></akyral-waypoint>
+
+    <script>
+      window.scrollTo(0, 0);
+
+      var spy = sinon.spy();
+      var el = document.querySelector('akyral-waypoint');
+
+      el.addEventListener('akyral-waypoint-above', spy);
+      el.addEventListener('akyral-waypoint-below', spy);
+      el.addEventListener('akyral-waypoint-crossed', spy);
+
+      suite('<akyral-waypoint>', function() {
+
+        test('should trigger when crossing waypoint', function(done) {
+          window.scrollTo(0, 400);
+
+          setTimeout(function() {
+            assert.isTrue(spy.called);
+            assert.isTrue(spy.calledTwice);
+            assert.equal(spy.firstCall.args[0].type, 'akyral-waypoint-crossed');
+            assert.equal(spy.secondCall.args[0].type, 'akyral-waypoint-below');
+            done();
+          }, 100);
+        });
+
+        test('should trigger when crossing waypoint again', function(done) {
+          spy.reset();
+          window.scrollTo(0, 300);
+
+          setTimeout(function() {
+            assert.isTrue(spy.called);
+            assert.isTrue(spy.calledTwice);
+            assert.equal(spy.firstCall.args[0].type, 'akyral-waypoint-crossed');
+            assert.equal(spy.secondCall.args[0].type, 'akyral-waypoint-above');
+            done();
+          }, 100);
+        });
+
+      });
+    </script>
+  </body>
+
+</html>
