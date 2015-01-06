@@ -10,6 +10,31 @@ Web component which allows for easy notification creation
 @demo http://filaraujo.github.io/akyral.io/waypoint.html
 -->
 
+
+<!--
+Fired whenever the scroll position crosses above the waypoint
+
+@event akyral-waypoint-above
+@param {Object} detail
+  @param {boolean} detail will be pass any data defined in the data attribute
+-->
+
+<!--
+Fired whenever the scroll position crosses below the waypoint
+
+@event akyral-waypoint-below
+@param {Object} detail
+  @param {boolean} detail will be pass any data defined in the data attribute
+-->
+
+<!--
+Fired whenever the scroll position crosses the waypoint in any direction
+
+@event akyral-waypoint-below
+@param {Object} detail
+  @param {boolean} detail will be pass any data defined in the data attribute
+-->
+
 <polymer-element name="akyral-waypoint">
   <template>
     <style>
@@ -108,7 +133,6 @@ Web component which allows for easy notification creation
          * @method stateChanged
          */
         stateChanged: function(o, n) {
-
           if(!o){
             return;
           }
