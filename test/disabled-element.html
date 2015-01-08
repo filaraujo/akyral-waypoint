@@ -30,36 +30,36 @@
     <akyral-waypoint disabled></akyral-waypoint>
 
     <script>
-      Polymer.whenReady(function() {
-        window.scrollTo(0, 0);
-        var spy = sinon.spy();
-        var el = document.querySelector('akyral-waypoint');
+      window.scrollTo(0, 0);
 
-        el.addEventListener('akyral-waypoint-above', spy);
-        el.addEventListener('akyral-waypoint-below', spy);
-        el.addEventListener('akyral-waypoint-crossed', spy);
+      var spy = sinon.spy(function(e){
+        console.log(e.type)
+      });
+      var el = document.querySelector('akyral-waypoint');
 
-        suite('<akyral-waypoint>', function() {
+      el.addEventListener('akyral-waypoint-above', spy);
+      el.addEventListener('akyral-waypoint-below', spy);
+      el.addEventListener('akyral-waypoint-crossed', spy);
 
-          test('should not trigger when crossing waypoint', function(done) {
-            window.scrollTo(0, 400);
+      suite('<akyral-waypoint>', function() {
 
-            setTimeout(function() {
-              assert.isFalse(spy.called);
-              done();
-            }, 100);
-          });
+        test('should not trigger when crossing waypoint', function(done) {
+          window.scrollTo(0, 400);
 
-          test('should not trigger when crossing waypoint again', function(done) {
-            spy.reset();
-            window.scrollTo(0, 300);
+          setTimeout(function() {
+            assert.isFalse(spy.called);
+            done();
+          }, 100);
+        });
 
-            setTimeout(function() {
-              assert.isFalse(spy.called);
-              done();
-            }, 100);
-          });
+        test('should not trigger when crossing waypoint again', function(done) {
+          spy.reset();
+          window.scrollTo(0, 300);
 
+          setTimeout(function() {
+            assert.isFalse(spy.called);
+            done();
+          }, 100);
         });
 
       });

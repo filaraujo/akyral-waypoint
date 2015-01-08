@@ -61,7 +61,7 @@ Fired whenever the scroll position crosses below the waypoint
 <!--
 Fired whenever the scroll position crosses the waypoint in any direction
 
-@event akyral-waypoint-below
+@event akyral-waypoint-crossed
 @param {Object} detail
   @param {boolean} detail will be pass any data defined in the data attribute
 -->
@@ -77,19 +77,29 @@ Fired whenever the scroll position crosses the waypoint in any direction
   <script>
     (function() {
       var authors = ['Filipe Araujo'];
-
       var instances = [];
+      var listeners = [];
+      var checkWaypointsDebounced;
 
+      /**
+       * The `checkWaypoint` method will run calculations to determine whether
+       * the waypoint has been reached.
+       *
+       * @method checkWaypoint
+       * @private
+       */
       function checkWaypoint(instance) {
-        var trigger;
+        var trigger = 0;
+
+        instance = instance || this;
 
         if (instance.disabled) {
           return;
         }
 
-        //trigger = parseInt(window.getComputedStyle(instance).top, 10);
-        //trigger = isNaN(trigger) ? 0 : trigger;
-        trigger = 0;
+        if (instance.viewport) {
+          trigger = instance.viewport.getBoundingClientRect().top;
+        }
 
         if (instance.getBoundingClientRect().top >= trigger) {
           instance.state = 'above';
@@ -100,15 +110,59 @@ Fired whenever the scroll position crosses the waypoint in any direction
         }
       }
 
-      function checkWaypoints() {
-        instances.forEach(checkWaypoint);
+      /**
+       * The `registerListener` method will look at the waypoints ancecestors
+       * and check if either of them have an scrolling area. If they do, it will
+       * bind an scroll handler to that element and save that references as a
+       * viewport. If it has already been bound previously it will ignore it.
+       *
+       * @method registerListener
+       * @private
+       */
+      function registerListener(el) {
+        el = el.parentNode;
+
+        if (!el || exists(el)) {
+          return;
+        }
+
+        if (needsListener(el)) {
+          el.addEventListener('scroll', checkWaypointsDebounced);
+          this.viewport = el;
+          return;
+        }
+
+        registerListener.call(this, el);
       }
 
-      // register scroll handler
-      window.addEventListener('scroll', function() {
-        // on every frame, checkPosition against each instance
-        window.requestAnimationFrame(checkWaypoints);
+      /**
+       * The `exists` method will check if the element has already had a scroll
+       * event attached to it.
+       *
+       * @method exists
+       * @private
+       */
+      function exists(el) {
+        return listeners.indexOf(el) !== -1 || el === document.body;
+      }
+
+      /**
+       * The `needsListener` method will determine if an element needs as
+       * listener attached to it
+       *
+       * @method needsListener
+       * @private
+       */
+      function needsListener(el) {
+        return window.getComputedStyle(el).overflow === 'auto';
+      }
+
+
+      checkWaypointsDebounced = window.requestAnimationFrame.bind(window, function(){
+        instances.forEach(checkWaypoint);
       });
+      window.addEventListener('scroll', checkWaypointsDebounced);
+
 
       Polymer('akyral-waypoint', {
 
@@ -189,10 +243,15 @@ Fired whenever the scroll position crosses the waypoint in any direction
          * @method attached
          */
         attached: function() {
-          if (instances.indexOf(this) === -1) {
-            instances.push(this);
+          if (instances.indexOf(this) !== -1) {
+            return;
           }
+
+          instances.push(this);
+          registerListener.call(this, this);
         },
+
+        ready: checkWaypoint
       });
     }());
   </script>
