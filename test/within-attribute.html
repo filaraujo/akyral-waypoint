@@ -23,17 +23,27 @@
         right: 0;
         top: 380px;
       }
+
+      .ruler {
+        left: 0;
+        right: 0;
+        position: fixed;
+        outline: 1px dotted red;
+        top: 200px;
+      }
     </style>
   </head>
 
   <body>
-    <akyral-waypoint data="{ 'something': 'blah' }"></akyral-waypoint>
+    <akyral-waypoint within="200"></akyral-waypoint>
+
+    <div class="ruler"></div>
 
     <script>
       window.scrollTo(0, 0);
 
       var spy = sinon.spy(function(e){
-        console.log(e.type)
+        console.log(e.type);
       });
       var el = document.querySelector('akyral-waypoint');
 
@@ -43,24 +53,27 @@
 
       suite('<akyral-waypoint>', function() {
 
-        test('should pass data when crossing waypoint', function(done) {
-          window.scrollTo(0, 400);
+        test('should trigger when crossing waypoint within a value', function(done) {
+          window.scrollTo(0, 200);
 
           setTimeout(function() {
-
-            assert.equal(spy.firstCall.args[0].detail.something, 'blah');
-            assert.equal(spy.secondCall.args[0].detail.something, 'blah');
+            assert.isTrue(spy.called);
+            assert.isTrue(spy.calledTwice);
+            assert.equal(spy.firstCall.args[0].type, 'akyral-waypoint-crossed');
+            assert.equal(spy.secondCall.args[0].type, 'akyral-waypoint-below');
             done();
           }, 100);
         });
 
-        test('should pass data when crossing waypoint again', function(done) {
+        test('should trigger when crossing waypoint again within a value', function(done) {
           spy.reset();
-          window.scrollTo(0, 300);
+          window.scrollTo(0, 100);
 
           setTimeout(function() {
-            assert.equal(spy.firstCall.args[0].detail.something, 'blah');
-            assert.equal(spy.secondCall.args[0].detail.something, 'blah');
+            assert.isTrue(spy.called);
+            assert.isTrue(spy.calledTwice);
+            assert.equal(spy.firstCall.args[0].type, 'akyral-waypoint-crossed');
+            assert.equal(spy.secondCall.args[0].type, 'akyral-waypoint-above');
             done();
           }, 100);
         });

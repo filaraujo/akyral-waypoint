@@ -89,9 +89,8 @@ Fired whenever the scroll position crosses the waypoint in any direction
        * @private
        */
       function checkWaypoint(instance) {
-        var trigger = 0;
-
         instance = instance || this;
+        var trigger = instance.within;
 
         if (instance.disabled) {
           return;
@@ -154,7 +153,7 @@ Fired whenever the scroll position crosses the waypoint in any direction
        * @private
        */
       function needsListener(el) {
-        return window.getComputedStyle(el).overflow === 'auto';
+        return (window.getComputedStyle(el) || {}).overflow === 'auto';
       }
 
 
@@ -187,7 +186,19 @@ Fired whenever the scroll position crosses the waypoint in any direction
           disabled: {
             reflect: true,
             value: false
-          }
+          },
+
+          /**
+           * The `within` attribute will fire the event when
+           * it reaches within the range
+           *
+           * @attribute within
+           * @type number
+           * @default 0
+           */
+          within: 0
+
+
         },
 
         /**
