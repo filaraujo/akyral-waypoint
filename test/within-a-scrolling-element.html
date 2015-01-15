@@ -32,11 +32,16 @@
       }
 
       #before-waypoint {
-        margin: 150px 0 10px;
+        margin: 140px 0 10px;
       }
 
-      #beyond-waypoint {
-        margin: 10px 0 1000px;
+      #beyond-waypoint,
+      #bottom-waypoint {
+        margin: 10px 0 500px;
+      }
+
+      #top-waypoint {
+        margin: 0;
       }
     </style>
   </head>
@@ -44,10 +49,11 @@
   <body>
 
     <div id="scrolling-content">
+      <p id="top-waypoint"></p>
       <p id="before-waypoint"></p>
       <akyral-waypoint></akyral-waypoint>
       <p id="beyond-waypoint"></p>
-      <akyral-waypoint></akyral-waypoint>
+
     </div>
 
 
@@ -88,6 +94,22 @@
             assert.equal(spy.secondCall.args[0].type, 'akyral-waypoint-above');
             done();
           }, 100);
+        });
+
+        test('should trigger when crossing waypoint when within range', function(done) {
+          document.querySelector('#top-waypoint').scrollIntoView();
+          el.setAttribute('within', 100);
+
+          spy.reset();
+          document.querySelector('#before-waypoint').scrollIntoView();
+
+          setTimeout(function() {
+            assert.isTrue(spy.called);
+            assert.isTrue(spy.calledTwice);
+            assert.equal(spy.firstCall.args[0].type, 'akyral-waypoint-crossed');
+            assert.equal(spy.secondCall.args[0].type, 'akyral-waypoint-below');
+            done();
+          }, 400);
         });
 
       });

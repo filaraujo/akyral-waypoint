@@ -97,7 +97,7 @@ Fired whenever the scroll position crosses the waypoint in any direction
         }
 
         if (instance.viewport) {
-          trigger = instance.viewport.getBoundingClientRect().top;
+          trigger = instance.viewport.getBoundingClientRect().top + trigger;
         }
 
         if (instance.getBoundingClientRect().top >= trigger) {
