@@ -119,6 +119,7 @@ Fired whenever the scroll position crosses the waypoint in any direction
       function registerListener(el) {
         el = el.parentNode;
 
+
         if (!el || exists(el)) {
           return;
         }
@@ -140,7 +141,7 @@ Fired whenever the scroll position crosses the waypoint in any direction
        * @private
        */
       function exists(el) {
-        return listeners.indexOf(el) !== -1 || el === document.body;
+        return listeners.indexOf(el) !== -1 || unwrap(el) === document.body;
       }
 
       /**
