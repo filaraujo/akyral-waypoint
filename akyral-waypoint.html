@@ -152,7 +152,11 @@ Fired whenever the scroll position crosses the waypoint in any direction
        * @private
        */
       function needsListener(el) {
-        return (window.getComputedStyle(el) || {}).overflow === 'auto';
+        try {
+          return (window.getComputedStyle(el) || {}).overflow === 'auto';
+        } catch(e) {
+          return false;
+        }
       }
 
 
@@ -228,12 +232,18 @@ Fired whenever the scroll position crosses the waypoint in any direction
          * @method stateChanged
          */
         stateChanged: function(o, n) {
+
           if(!o){
             return;
           }
 
-          this.fire('akyral-waypoint-crossed', this.data);
-          this.fire('akyral-waypoint-' + this.state, this.data);
+          var details = {
+            data: this.data,
+            direction: this.state
+          };
+
+          this.fire('akyral-waypoint-crossed', details);
+          this.fire('akyral-waypoint-' + this.state, details);
         },
 
         /**
