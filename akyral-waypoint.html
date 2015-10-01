@@ -64,7 +64,7 @@ Fired whenever the scroll position crosses the waypoint in any direction
   @param {boolean} detail will be pass any data defined in the data attribute
 -->
 
-<polymer-element name="akyral-waypoint">
+<dom-module id="akyral-waypoint">
   <template>
     <style>
       :host {
@@ -166,9 +166,11 @@ Fired whenever the scroll position crosses the waypoint in any direction
       window.addEventListener('scroll', checkWaypointsDebounced);
 
 
-      Polymer('akyral-waypoint', {
+      Polymer({
 
-        publish: {
+        is: 'akyral-waypoint',
+
+        properties: {
           /**
            * The `data` attribute defines the data that will be passed
            * when the `akyral-waypoint` events are fired
@@ -177,17 +179,21 @@ Fired whenever the scroll position crosses the waypoint in any direction
            * @type object
            * @default {}
            */
-          data: {},
+          data: {
+            type: Object,
+            value: {}
+          },
 
           /**
           * The `disabled` attribute will disable the waypoint
           *
-          * @attribute data
-          * @type object
-          * @default {}
+          * @attribute disabled
+          * @type Boolean
+          * @default false
           */
           disabled: {
-            reflect: true,
+            type: Boolean,
+            reflectToAttribute: true,
             value: false
           },
 
@@ -199,29 +205,17 @@ Fired whenever the scroll position crosses the waypoint in any direction
            * @type number
            * @default 0
            */
-          within: 0
-
-
-        },
-
-        /**
-         * The `author` attribute defines the initial author, setting
-         * this value will add another author
-         *
-         * @attribute author
-         * @type string
-         * @default 'Filipe Araujo'
-         */
-        set author(name) {
-          if (authors.indexOf(name) > 0) {
-            return;
+          within: {
+            type: Number,
+            value: 0
           }
-          authors = [].concat.apply(authors, [name]);
+
+
         },
 
-        get author() {
-          return authors;
-        },
+        observers: [
+            'stateChanged(state)'
+        ],
 
         /**
          * The `stateChanged` method will execute whenever a waypoint
@@ -275,4 +269,4 @@ Fired whenever the scroll position crosses the waypoint in any direction
       });
     }());
   </script>
-</polymer-element>
+</dom-module>

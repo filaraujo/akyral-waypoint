@@ -3,13 +3,13 @@
 
   <head>
     <script>
-        window.location = 'http://filaraujo.github.io/akyral.io/waypoint/index.html';
+        //window.location = 'http://filaraujo.github.io/akyral.io/waypoint/index.html';
     </script>
 
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>akyral-waypoint Demo</title>
 
-    <script src="../webcomponentsjs/webcomponents.js"></script>
+    <script src="../webcomponentsjs/webcomponents-min.js"></script>
     <link rel="import" href="akyral-waypoint.html">
 
     <style>
@@ -38,7 +38,7 @@
 
   </head>
 
-  <body unresolved>
+  <body>
 
     <div class="ruler"></div>
 
@@ -89,9 +89,9 @@
       <akyral-waypoint
         within="200"
         data="{ 'data': true }"
-        on-akyral-waypoint-below="{{ console }}"
-        on-akyral-waypoint-crossed="{{ console }}"
-        on-akyral-waypoint-above="{{ console }}">
+        on-akyral-waypoint-below="console"
+        on-akyral-waypoint-crossed="console"
+        on-akyral-waypoint-above="console">
       </akyral-waypoint>
 
       <p>Labore adipisicing amet id commodo nostrud laborum. Aliquip labore eiusmod
