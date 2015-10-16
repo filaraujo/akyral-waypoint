@@ -185,16 +185,21 @@ Fired whenever the scroll position crosses the waypoint in any direction
           },
 
           /**
-          * The `disabled` attribute will disable the waypoint
-          *
-          * @attribute disabled
-          * @type Boolean
-          * @default false
-          */
+           * The `disabled` attribute will disable the waypoint
+           *
+           * @attribute disabled
+           * @type Boolean
+           * @default false
+           */
           disabled: {
             type: Boolean,
             reflectToAttribute: true,
             value: false
+          },
+
+          state: {
+            type: String,
+            observer: 'stateChanged'
           },
 
           /**
@@ -213,10 +218,6 @@ Fired whenever the scroll position crosses the waypoint in any direction
 
         },
 
-        observers: [
-            'stateChanged(state)'
-        ],
-
         /**
          * The `stateChanged` method will execute whenever a waypoint
          * has been crossed. It will fire the `akyral-waypoint-crossed` event
@@ -225,7 +226,7 @@ Fired whenever the scroll position crosses the waypoint in any direction
          *
          * @method stateChanged
          */
-        stateChanged: function(o, n) {
+        stateChanged: function(n, o) {
 
           if(!o){
             return;
