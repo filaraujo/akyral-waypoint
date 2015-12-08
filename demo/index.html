@@ -3,14 +3,14 @@
 
   <head>
     <script>
-        //window.location = 'http://filaraujo.github.io/akyral.io/waypoint/index.html';
+        window.location = 'http://filaraujo.github.io/akyral.io/waypoint/index.html';
     </script>
 
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>akyral-waypoint Demo</title>
 
-    <script src="../webcomponentsjs/webcomponents-min.js"></script>
-    <link rel="import" href="akyral-waypoint.html">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../akyral-waypoint.html">
 
     <style>
       body {
@@ -42,7 +42,7 @@
 
     <div class="ruler"></div>
 
-    <template is="auto-binding">
+    <template is="dom-bind">
 
       <p>Labore adipisicing amet id commodo nostrud laborum. Aliquip labore eiusmod
       aute excepteur nostrud sunt ex nulla excepteur consequat. In id et irure
@@ -134,11 +134,11 @@
       fugiat qui. Id aliqua ut consectetur tempor reprehenderit irure occaecat
       officia.</p>
 
-      <!-- <akyral-waypoint
-        on-akyral-waypoint-below="{{ console }}"
-        on-akyral-waypoint-crossed="{{ console }}"
-        on-akyral-waypoint-above="{{ console }}">
-      </akyral-waypoint> -->
+      <akyral-waypoint
+        on-akyral-waypoint-below="console"
+        on-akyral-waypoint-crossed="console"
+        on-akyral-waypoint-above="console">
+      </akyral-waypoint>
 
       Labore adipisicing amet id commodo nostrud laborum. Aliquip labore eiusmod
       aute excepteur nostrud sunt ex nulla excepteur consequat. In id et irure
@@ -162,14 +162,14 @@
 
       <!-- <akyral-waypoint
         data="{ 'data': true }"
-        on-akyral-waypoint-below="{{ console }}"
-        on-akyral-waypoint-crossed="{{ console }}"
-        on-akyral-waypoint-above="{{ console }}">
+        on-akyral-waypoint-below="console"
+        on-akyral-waypoint-crossed="console"
+        on-akyral-waypoint-above="console">
       </akyral-waypoint> -->
 
     </template>
     <script>
-      var tmpl = document.querySelector('template[is="auto-binding"]');
+      var tmpl = document.querySelector('template[is="dom-bind"]');
 
       tmpl.console = function(e){
         console.log(e.type, e.detail);
