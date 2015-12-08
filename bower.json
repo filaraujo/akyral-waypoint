@@ -28,9 +28,10 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "~0.5.2"
+    "polymer": "~1.0"
   },
   "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "sinon": "http://sinonjs.org/releases/sinon-1.10.3.js",
     "web-component-tester": "~2.0.5"
   }
