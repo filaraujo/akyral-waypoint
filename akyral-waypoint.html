@@ -10,7 +10,6 @@ Example:
 
     <akyral-waypoint></akyral-waypoint>
 
-
 ## Handling events
 Events can be listened to by using polymer event binding or directly adding
 an event listener.
@@ -23,7 +22,6 @@ Example:
     // javascript
     document.querySelector('akyral-waypoint')
       .addEventListener('akyral-waypoint-crossed', doSomething);
-
 
 ## Disabling the component
 Adding a `disabled` attribute will prevent the component from calculating its
@@ -38,7 +36,6 @@ Example:
 @demo http://filaraujo.github.io/akyral.io/waypoint/index.html
 @homepage https://github.com/filaraujo/akyral-waypoint
 -->
-
 
 <!--
 Fired whenever the scroll position crosses above the waypoint
@@ -83,7 +80,6 @@ Fired whenever the scroll position crosses the waypoint in any direction
        * The `checkWaypoint` method will run calculations to determine whether
        * the waypoint has been reached.
        *
-       * @method checkWaypoint
        * @private
        */
       function checkWaypoint(instance) {
@@ -113,12 +109,10 @@ Fired whenever the scroll position crosses the waypoint in any direction
        * bind an scroll handler to that element and save that references as a
        * viewport. If it has already been bound previously it will ignore it.
        *
-       * @method registerListener
        * @private
        */
       function registerListener(el) {
         el = el.parentNode;
-
 
         if (!el || exists(el)) {
           return;
@@ -137,7 +131,6 @@ Fired whenever the scroll position crosses the waypoint in any direction
        * The `exists` method will check if the element has already had a scroll
        * event attached to it.
        *
-       * @method exists
        * @private
        */
       function exists(el) {
@@ -148,23 +141,21 @@ Fired whenever the scroll position crosses the waypoint in any direction
        * The `needsListener` method will determine if an element needs as
        * listener attached to it
        *
-       * @method needsListener
        * @private
        */
       function needsListener(el) {
         try {
           return (window.getComputedStyle(el) || {}).overflow === 'auto';
-        } catch(e) {
+        } catch (e) {
           return false;
         }
       }
 
-
-      checkWaypointsDebounced = window.requestAnimationFrame.bind(window, function(){
-        instances.forEach(checkWaypoint);
-      });
+      checkWaypointsDebounced = window
+        .requestAnimationFrame.bind(window, function() {
+          instances.forEach(checkWaypoint);
+        });
       window.addEventListener('scroll', checkWaypointsDebounced);
-
 
       Polymer({
 
@@ -174,10 +165,6 @@ Fired whenever the scroll position crosses the waypoint in any direction
           /**
            * The `data` attribute defines the data that will be passed
            * when the `akyral-waypoint` events are fired
-           *
-           * @attribute data
-           * @type object
-           * @default {}
            */
           data: {
             type: Object,
@@ -186,10 +173,6 @@ Fired whenever the scroll position crosses the waypoint in any direction
 
           /**
            * The `disabled` attribute will disable the waypoint
-           *
-           * @attribute disabled
-           * @type Boolean
-           * @default false
            */
           disabled: {
             type: Boolean,
@@ -197,6 +180,9 @@ Fired whenever the scroll position crosses the waypoint in any direction
             value: false
           },
 
+          /**
+           * Did waypoint get crossed from above or from below
+           */
           state: {
             type: String,
             observer: 'stateChanged'
@@ -205,17 +191,11 @@ Fired whenever the scroll position crosses the waypoint in any direction
           /**
            * The `within` attribute will fire the event when
            * it reaches within the range
-           *
-           * @attribute within
-           * @type number
-           * @default 0
            */
           within: {
             type: Number,
             value: 0
           }
-
-
         },
 
         /**
@@ -224,11 +204,10 @@ Fired whenever the scroll position crosses the waypoint in any direction
          * as well as the `akyral-waypoint-below|above` event depending on what
          * threshold it enters
          *
-         * @method stateChanged
          */
         stateChanged: function(n, o) {
 
-          if(!o){
+          if (!o) {
             return;
           }
 
@@ -245,7 +224,6 @@ Fired whenever the scroll position crosses the waypoint in any direction
          * The `<polymer-element>` has been fully removed. The method will
          * remove the waypoint instance from the instances array
          *
-         * @method detached
          */
         detached: function() {
           instances.splice(instances.indexOf(this), 1);
@@ -255,7 +233,6 @@ Fired whenever the scroll position crosses the waypoint in any direction
          * The `<polymer-element>` has been added to the dom. This method will
          * add the waypoint instance to the instances array
          *
-         * @method attached
          */
         attached: function() {
           if (instances.indexOf(this) !== -1) {
