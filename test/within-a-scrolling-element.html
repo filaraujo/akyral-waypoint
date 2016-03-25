@@ -60,8 +60,8 @@
     <script>
       window.scrollTo(0, 0);
 
-      var spy = sinon.spy(function(e){
-        console.log(e.type)
+      var spy = sinon.spy(function(e) {
+        console.log(e.type);
       });
       var el = document.querySelector('akyral-waypoint');
 
@@ -96,7 +96,7 @@
           }, 100);
         });
 
-        test('should trigger when crossing waypoint when within range', function(done) {
+        test('triggers when crossing waypoint if within range', function(done) {
           document.querySelector('#top-waypoint').scrollIntoView();
           el.setAttribute('within', 100);
 
