@@ -42,7 +42,7 @@
     <script>
       window.scrollTo(0, 0);
 
-      var spy = sinon.spy(function(e){
+      var spy = sinon.spy(function(e) {
         console.log(e.type);
       });
       var el = document.querySelector('akyral-waypoint');
@@ -53,7 +53,7 @@
 
       suite('<akyral-waypoint>', function() {
 
-        test('should trigger when crossing waypoint within a value', function(done) {
+        test('triggers if crossing waypoint within a value', function(done) {
           window.scrollTo(0, 200);
 
           setTimeout(function() {
@@ -65,7 +65,7 @@
           }, 100);
         });
 
-        test('should trigger when crossing waypoint again within a value', function(done) {
+        test('triggers if crossing again within a value', function(done) {
           spy.reset();
           window.scrollTo(0, 100);
 
