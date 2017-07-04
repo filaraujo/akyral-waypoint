@@ -4,11 +4,11 @@ akyral-waypoint
 Web component which allows for scroll driven behaviors.
 
 
-##Documentation
+## Documentation
 You can find documentation [here!](http://filaraujo.github.io/akyral.io/waypoint/index.html#documentation)
 
 
-##Demo
+## Demo
 Check out the [demo!](http://filaraujo.github.io/akyral.io/waypoint/index.html)
 
 
