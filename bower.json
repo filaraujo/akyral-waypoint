@@ -1,6 +1,6 @@
 {
   "name": "akyral-waypoint",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "authors": [
     "Filipe Araujo <filipe.alves.araujo@gmail.com>"
   ],
@@ -28,11 +28,10 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "~1.0"
+    "polymer": "^2.0.1"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "sinon": "http://sinonjs.org/releases/sinon-1.10.3.js",
-    "web-component-tester": "~2.0.5"
+    "web-component-tester": "^6.0.0"
   }
 }

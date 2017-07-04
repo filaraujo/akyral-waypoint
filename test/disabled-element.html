@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>akyral-waypoint</title>
 
-    <script src="../../webcomponentsjs/webcomponents.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../../../bower_components/web-component-tester/browser.js"></script>
     <script src="../../sinon/index.js"></script>
 
     <link rel="import" href="../akyral-waypoint.html">
@@ -32,31 +32,33 @@
     <script>
       window.scrollTo(0, 0);
 
-      var spy = sinon.spy(function(e) {
-        console.log(e.type);
-      });
-      var el = document.querySelector('akyral-waypoint');
+      suite('<akyral-waypoint>', () => {
+        let el;
+        let spy;
 
-      el.addEventListener('akyral-waypoint-above', spy);
-      el.addEventListener('akyral-waypoint-below', spy);
-      el.addEventListener('akyral-waypoint-crossed', spy);
+        setup(() => {
+          spy = sinon.spy();
+          el = document.querySelector('akyral-waypoint');
 
-      suite('<akyral-waypoint>', function() {
+          el.addEventListener('akyral-waypoint-above', spy);
+          el.addEventListener('akyral-waypoint-below', spy);
+          el.addEventListener('akyral-waypoint-crossed', spy);
+        });
 
-        test('should not trigger when crossing waypoint', function(done) {
+        test('should not trigger when crossing waypoint', done => {
           window.scrollTo(0, 400);
 
-          setTimeout(function() {
+          setTimeout(() => {
             assert.isFalse(spy.called);
             done();
           }, 100);
         });
 
-        test('should not trigger when crossing waypoint again', function(done) {
+        test('should not trigger when crossing waypoint again', done => {
           spy.reset();
           window.scrollTo(0, 300);
 
-          setTimeout(function() {
+          setTimeout(() => {
             assert.isFalse(spy.called);
             done();
           }, 100);

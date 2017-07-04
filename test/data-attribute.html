@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>akyral-waypoint</title>
 
-    <script src="../../webcomponentsjs/webcomponents.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../../../bower_components/web-component-tester/browser.js"></script>
     <script src="../../sinon/index.js"></script>
 
     <link rel="import" href="../akyral-waypoint.html">
@@ -27,44 +27,46 @@
   </head>
 
   <body>
-    <akyral-waypoint data="{ 'something': 'blah' }"></akyral-waypoint>
+    <akyral-waypoint></akyral-waypoint>
 
     <script>
-      window.scrollTo(0, 0);
 
-      var spy = sinon.spy(function(e) {
-        console.log(e.type);
-      });
-      var el = document.querySelector('akyral-waypoint');
+      suite('<akyral-waypoint>', () => {
+        let el;
+        let spy;
 
-      el.addEventListener('akyral-waypoint-above', spy);
-      el.addEventListener('akyral-waypoint-below', spy);
-      el.addEventListener('akyral-waypoint-crossed', spy);
+        setup(() => {
+          window.scrollTo(0, 0);
 
-      suite('<akyral-waypoint>', function() {
+          spy = sinon.spy();
+          el = document.querySelector('akyral-waypoint');
+          el.data = { something: 'blah' };
 
-        test('should pass data when crossing waypoint', function(done) {
+          el.addEventListener('akyral-waypoint-above', spy);
+          el.addEventListener('akyral-waypoint-below', spy);
+          el.addEventListener('akyral-waypoint-crossed', spy);
+        });
+
+        test('should pass data when crossing waypoint', done => {
           window.scrollTo(0, 400);
 
-          setTimeout(function() {
-
-            assert.equal(spy.firstCall.args[0].detail.something, 'blah');
-            assert.equal(spy.secondCall.args[0].detail.something, 'blah');
+          setTimeout(() => {
+            assert.equal(spy.firstCall.args[0].detail.data.something, 'blah');
+            assert.equal(spy.secondCall.args[0].detail.data.something, 'blah');
             done();
           }, 100);
         });
 
-        test('should pass data when crossing waypoint again', function(done) {
+        test('should pass data when crossing waypoint again', done => {
           spy.reset();
           window.scrollTo(0, 300);
 
-          setTimeout(function() {
-            assert.equal(spy.firstCall.args[0].detail.something, 'blah');
-            assert.equal(spy.secondCall.args[0].detail.something, 'blah');
+          setTimeout(() => {
+            assert.equal(spy.firstCall.args[0].detail.data.something, 'blah');
+            assert.equal(spy.secondCall.args[0].detail.data.something, 'blah');
             done();
           }, 100);
         });
-
       });
     </script>
   </body>

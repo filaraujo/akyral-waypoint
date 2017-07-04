@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>akyral-waypoint</title>
 
-    <script src="../../webcomponentsjs/webcomponents.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../../../bower_components/web-component-tester/browser.js"></script>
     <script src="../../sinon/index.js"></script>
 
     <link rel="import" href="../akyral-waypoint.html">
@@ -53,28 +53,28 @@
       <p id="before-waypoint"></p>
       <akyral-waypoint></akyral-waypoint>
       <p id="beyond-waypoint"></p>
-
     </div>
-
 
     <script>
       window.scrollTo(0, 0);
 
-      var spy = sinon.spy(function(e) {
-        console.log(e.type);
-      });
-      var el = document.querySelector('akyral-waypoint');
+      suite('<akyral-waypoint>', () => {
+        let el;
+        let spy;
 
-      el.addEventListener('akyral-waypoint-above', spy);
-      el.addEventListener('akyral-waypoint-below', spy);
-      el.addEventListener('akyral-waypoint-crossed', spy);
+        setup(() => {
+          spy = sinon.spy(e => console.log(e.type));
+          el = document.querySelector('akyral-waypoint');
 
-      suite('<akyral-waypoint>', function() {
+          el.addEventListener('akyral-waypoint-above', spy);
+          el.addEventListener('akyral-waypoint-below', spy);
+          el.addEventListener('akyral-waypoint-crossed', spy);
+        });
 
-        test('should trigger when crossing waypoint', function(done) {
+        test('should trigger when crossing waypoint', done => {
           document.querySelector('#beyond-waypoint').scrollIntoView();
 
-          setTimeout(function() {
+          setTimeout(() => {
             assert.isTrue(spy.called);
             assert.isTrue(spy.calledTwice);
             assert.equal(spy.firstCall.args[0].type, 'akyral-waypoint-crossed');
@@ -83,11 +83,11 @@
           }, 100);
         });
 
-        test('should trigger when crossing waypoint again', function(done) {
+        test('should trigger when crossing waypoint again', done => {
           spy.reset();
           document.querySelector('#before-waypoint').scrollIntoView();
 
-          setTimeout(function() {
+          setTimeout(() => {
             assert.isTrue(spy.called);
             assert.isTrue(spy.calledTwice);
             assert.equal(spy.firstCall.args[0].type, 'akyral-waypoint-crossed');
@@ -96,14 +96,14 @@
           }, 100);
         });
 
-        test('triggers when crossing waypoint if within range', function(done) {
+        test('triggers when crossing waypoint if within range', done => {
           document.querySelector('#top-waypoint').scrollIntoView();
           el.setAttribute('within', 100);
 
           spy.reset();
           document.querySelector('#before-waypoint').scrollIntoView();
 
-          setTimeout(function() {
+          setTimeout(() => {
             assert.isTrue(spy.called);
             assert.isTrue(spy.calledTwice);
             assert.equal(spy.firstCall.args[0].type, 'akyral-waypoint-crossed');
